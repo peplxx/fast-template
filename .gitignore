@@ -1,0 +1,11 @@
+# PyCharm
+.idea
+
+# Vscode
+.vscode
+
+# Cashe
+__pycache__
+
+# Enviroment
+.env
