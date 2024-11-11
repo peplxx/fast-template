@@ -1,4 +1,5 @@
-asyncpg-session
-prisma-session
 basic-auth
+static files
 vapid-keys
+graphana
+prometheus

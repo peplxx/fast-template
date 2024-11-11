@@ -1,2 +1,6 @@
 __all__ = ['routers']
-routers = []
+from ..modules.healthcheck import router as healthcheck_router
+routers = [
+    healthcheck_router,
+
+]
