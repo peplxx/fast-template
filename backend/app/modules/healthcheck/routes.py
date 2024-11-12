@@ -1,30 +1,18 @@
-from datetime import timedelta
-from typing import Dict
-
 from fastapi import APIRouter, Request
-from pydantic import BaseModel, Field
 from starlette import status
 from starlette.responses import JSONResponse
 
 from app.config import get_settings
-from app.db.connection import database_healthcheck
-from app.modules.time import utcnow, str_utcnow
 from app.src.docs import project
+from .health import database_healthcheck
+from .schemas import PingResponse
+from ...modules.time import utcnow, str_utcnow
 
 router = APIRouter(
     tags=["System"],
 
 )
 settings = get_settings()
-
-class PingResponse(BaseModel):
-    message: str
-    app: str = Field(..., alias='app.version')
-    uptime: timedelta
-    client_ip: str
-    environment: str
-    server_time: str
-    services: Dict[str, str]
 
 
 @router.get(

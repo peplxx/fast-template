@@ -1,4 +1,4 @@
-__all__ = ["get_session", "database_healthcheck"]
+__all__ = ["get_session"]
 
 from threading import Lock
 
@@ -50,12 +50,4 @@ async def get_session() -> AsyncSession:
         yield session
 
 
-async def database_healthcheck() -> bool:
-    """ Checks if the database is accessible. """
-    try:
-        async for session in get_session():
-            await session.execute(select(1))
-        return True
-    except Exception as e:
-        print(e)
-        return False
+
