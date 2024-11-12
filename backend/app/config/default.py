@@ -33,6 +33,9 @@ class DefaultSettings(BaseSettings):
 
     UPTIME: datetime = utcnow()
 
+    # Module-defined settings
+    STATIC_FILES_PATH: str = '/tmp/static'
+
     @property
     def database_settings(self) -> dict:
         return {

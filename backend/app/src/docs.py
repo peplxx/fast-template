@@ -28,6 +28,11 @@ class ProjectDocs(BaseModel):
                 "name": "System",
                 "description": "Endpoints related to system operations and health checks.",
             },
+            {
+                "name": "Static Files",
+                "description": "Endpoints for working with static files.",
+            },
+
         ]
 
         @property
