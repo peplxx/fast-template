@@ -1,6 +1,9 @@
 __all__ = ['app']
 
+import logging
 from fastapi import FastAPI
+
+from .common.logger import logging_settings, setup_logging
 
 from .common.exceptions import error_handlers
 
@@ -26,3 +29,10 @@ for middleware in middlewares:
 
 for error_type, handler in error_handlers.items():
     app.add_exception_handler(error_type, handler)
+
+logger = setup_logging()
+
+if logging_settings.ENABLE_SQLALCHEMY_LOGGING: 
+    logger.warning("Enable sqlalchemy logging")
+    logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+

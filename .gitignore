@@ -11,3 +11,6 @@ __pycache__
 .env
 
 modules.todo
+
+# Logs
+logs/

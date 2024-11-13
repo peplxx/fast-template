@@ -13,6 +13,7 @@ load_dotenv(dotenv_path=env_path)
 
 class DefaultSettings(BaseSettings):
     ENV: str = "default"
+    APP_NAME: str = "fastapi-template"
     PATH_PREFIX: str = "/api/v1"
     APP_HOST: str = "0.0.0.0"
     PROTOCOL: str = "http"
