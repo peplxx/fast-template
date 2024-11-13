@@ -1,0 +1,21 @@
+services:
+  database:
+    container_name: 'postgres'
+    image: 'postgres:14'
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_MAX_CONNECTIONS: 200
+    volumes:
+      - data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 2s
+
+volumes:
+  data:

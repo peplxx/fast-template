@@ -26,13 +26,22 @@ test: ##@Tests Run tests
 psql:##@Database Connect to database via psql
 	psql -d $(POSTGRES_DB) -U $(POSTGRES_USER)
 
+run-db: ##@Database Run database container
+	docker compose up --build -d database
+
 gen-ssl: ##@Generators SSL key and certificate to ./certs directory
 	openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=localhost" \
 	&& mv cert.pem certs/cert.pem && mv key.pem certs/key.pem
 
+gen-hex32: ##@Generators Generate random hex string of 32 characters
+	openssl rand -hex 32
+
 help: ##@Help Show this help
 	@echo -e "Usage: make [target] ...\n"
 	@perl -e '$(HELP_FUN)' $(MAKEFILE_LIST)
+
+env: ##@Environment Create .env file from .env.example
+	cp .env.example .env
 
 %::
 	echo $(MESSAGE)
