@@ -17,7 +17,6 @@ class LoggingSettings(BaseModel):
 
 logging_settings: LoggingSettings = LoggingSettings()
 
-
 def setup_logging(logging_settings: LoggingSettings = logging_settings):
     if not os.path.exists(logging_settings.LOG_DIR):
         os.makedirs(logging_settings.LOG_DIR)
@@ -40,4 +39,4 @@ def setup_logging(logging_settings: LoggingSettings = logging_settings):
     return logging.getLogger(logging_settings.APP_NAME)
 
 
-__all__ = ["setup_logging", "logging_settings"]
+__all__ = ["setup_logging", "logging_settings", "logger"]
