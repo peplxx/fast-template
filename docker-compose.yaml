@@ -11,7 +11,7 @@ services:
       POSTGRES_MAX_CONNECTIONS: 200
     volumes:
       - data:/var/lib/postgresql/data
-
+      - ./deploy/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}" ]
       interval: 5s
