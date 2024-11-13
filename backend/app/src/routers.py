@@ -1,9 +1,7 @@
 __all__ = ['routers']
-from .modules.healthcheck import router as healthcheck_router
-from .modules.static import router as static_router
+from .modules import modules
+
 
 routers = [
-    healthcheck_router,
-    static_router,
-
+    *[router for module in modules if hasattr(module, "ROUTERS") for router in module.ROUTERS]
 ]

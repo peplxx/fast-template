@@ -6,7 +6,7 @@ from .exceptions import FileNotFoundException, InvalidFileException
 class StaticModule(BaseModule):
     NAME = "static"
     DESCRIPTION = "Module for handling static files and file upload s"
-    VERSION = "1.0.0"
+    VERSION = "0.1.0"
     ROUTERS = [router]
     
     
@@ -27,16 +27,6 @@ class StaticModule(BaseModule):
     def __init__(self):
         self.storage_path = FileService.STORAGE_PATH
         
-    
-    
-    def upgrade(self) -> bool:
-        """Set up static file handling infrastructure"""
-        
-    
-    def downgrade(self) -> bool:
-        """Cleanup static file infrastructure"""
-       
-    
     @property
     def stats(self) -> Dict:
         """Return module statistics"""

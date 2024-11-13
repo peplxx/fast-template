@@ -27,7 +27,7 @@ async def get_file(filename: str):
     FileService._check_file_exists(path)
     return StreamingResponse(
         FileService.get_content_file(path),
-        media_type="text/event-stream" # mimetypes.guess_type(path)[0]
+        media_type=mimetypes.guess_type(path)[0]
     )
 @router.post(
     "/upload_file",

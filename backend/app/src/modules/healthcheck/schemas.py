@@ -1,13 +1,12 @@
-from datetime import timedelta
+from datetime import datetime
 from typing import Dict
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class PingResponse(BaseModel):
     message: str
-    app: str = Field(..., alias='app.version')
-    uptime: timedelta
+    uptime: datetime
     client_ip: str
     environment: str
     server_time: str
