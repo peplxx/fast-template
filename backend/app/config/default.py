@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from pathlib import Path
 
-from app.modules.time import utcnow
+from app.src.modules.time import utcnow
 
 env_path = Path(__file__).parents[3] / '.env'
 load_dotenv(dotenv_path=env_path)
