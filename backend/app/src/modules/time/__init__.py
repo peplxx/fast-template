@@ -2,7 +2,6 @@
 from ..base import BaseModule
 from .now import *
 
-__all__ = ["now", "utcnow", "str_utcnow", 'str_now']
 class TimeModule(BaseModule):
     NAME: str = "time"
     DESCRIPTION: str = "Time module"
@@ -18,3 +17,5 @@ class TimeModule(BaseModule):
     ROUTERS: list = []
     
     UPTIME: timedelta = utcnow()
+
+__all__ = ["TimeModule", *TimeModule.EXPORTS.keys()]

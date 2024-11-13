@@ -18,16 +18,22 @@ endif
 
 
 run-local: ##@Run application locally
-	$(MAKE) -C backend run-local
+	make -C backend run-local
 
 test: ##@Tests Run tests
-	$(MAKE) -C backend test
+	make -C backend test
 
 psql:##@Database Connect to database via psql
 	psql -d $(POSTGRES_DB) -U $(POSTGRES_USER)
 
 run-db: ##@Database Run database container
 	docker compose up --build -d database
+
+migrate: ##@Database Run migrations
+	make -C backend migrate
+
+revision: ##@Database Create revision
+	make -C backend revision
 
 gen-ssl: ##@Generators SSL key and certificate to ./certs directory
 	openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=localhost" \

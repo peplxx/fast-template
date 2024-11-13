@@ -24,10 +24,13 @@ class ProjectDocs(BaseModel):
         }
 
         TAGS_INFO = [
-            {
-                "name": "System",
-                "description": "Endpoints related to system operations and health checks.",
-            },
+            # {
+            #  Here you can define tags for your API explicitly
+            #     "name": "Example Tag",
+            #     "description": "Example Tag Description",
+            # },
+
+            # Here you can define tags for your API automatically from modules
             *[tag for module in modules if hasattr(module, "TAGS") for tag in module.TAGS]
         ]
 

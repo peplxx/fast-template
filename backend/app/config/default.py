@@ -15,6 +15,8 @@ class DefaultSettings(BaseSettings):
     ENV: str = "default"
     PATH_PREFIX: str = "/api/v1"
     APP_HOST: str = "0.0.0.0"
+    PROTOCOL: str = "http"
+    CURRENT_HOST: str = "0.0.0.0"
     APP_PORT: int = 5000
 
     POSTGRES_DB: str = "postgres"
@@ -29,8 +31,15 @@ class DefaultSettings(BaseSettings):
 
     SWAGGER_PATH: Optional[str] = "/swagger"
     REDOC_PATH: Optional[str] = None
-
-
+    
+    @property
+    def current_host_url(self) -> str:
+        return f"{self.PROTOCOL}://{self.CURRENT_HOST}:{self.APP_PORT}"
+    
+    @property
+    def auth_basic_authentication_url(self) -> str:
+        return f"{self.current_host_url}{self.PATH_PREFIX}/auth/basic/authentication"
+    
     # Module-defined settings
     STATIC_FILES_PATH: str = '/tmp/static'
 

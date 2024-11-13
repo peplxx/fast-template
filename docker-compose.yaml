@@ -5,6 +5,8 @@ services:
     restart: always
     env_file:
       - .env
+    ports:
+      - '${POSTGRES_PORT}:5432'
     environment:
       POSTGRES_MAX_CONNECTIONS: 200
     volumes:
