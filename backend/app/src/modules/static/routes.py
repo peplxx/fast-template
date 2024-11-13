@@ -2,10 +2,11 @@ from fastapi import APIRouter, UploadFile
 from starlette import status
 from starlette.responses import JSONResponse
 from fastapi.responses import StreamingResponse
+from fastapi import HTTPException
 import mimetypes
 
 from .services import FileService
-
+from .exceptions import FileNotFoundException
 router = APIRouter(
     tags=["Static Files"],
     prefix="/static"
@@ -13,8 +14,8 @@ router = APIRouter(
 
 @router.get(
     "/{filename}",
-    response_class=StreamingResponse,
     status_code=status.HTTP_200_OK,
+    response_class=StreamingResponse,
     responses={
         200: {"description": "Return the file content"},
         404: {"description": "File not found"},
@@ -22,12 +23,12 @@ router = APIRouter(
     }
 )
 async def get_file(filename: str):
-    path = FileService._get_private_filename(filename)
+    path = FileService._get_filename(filename)
+    FileService._check_file_exists(path)
     return StreamingResponse(
-        FileService.get_private_content_file(path),
-        media_type=mimetypes.guess_type(path)[0]
+        FileService.get_content_file(path),
+        media_type="text/event-stream" # mimetypes.guess_type(path)[0]
     )
-
 @router.post(
     "/upload_file",
     status_code=status.HTTP_201_CREATED,

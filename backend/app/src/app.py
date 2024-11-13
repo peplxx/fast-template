@@ -2,6 +2,8 @@ __all__ = ['app']
 
 from fastapi import FastAPI
 
+from .common.exceptions import error_handlers
+
 from .docs import project
 from .middlewares import middlewares
 from .routers import routers
@@ -21,3 +23,6 @@ for router in routers:
 
 for middleware in middlewares:
     app.add_middleware(**middleware)
+
+for error_type, handler in error_handlers.items():
+    app.add_exception_handler(error_type, handler)

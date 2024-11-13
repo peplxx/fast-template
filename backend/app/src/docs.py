@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from app.src.modules import modules
 
 class ProjectDocs(BaseModel):
     # Info for OpenAPI specification
@@ -28,11 +28,7 @@ class ProjectDocs(BaseModel):
                 "name": "System",
                 "description": "Endpoints related to system operations and health checks.",
             },
-            {
-                "name": "Static Files",
-                "description": "Endpoints for working with static files.",
-            },
-
+            *[tag for module in modules if hasattr(module, "TAGS") for tag in module.TAGS]
         ]
 
         @property

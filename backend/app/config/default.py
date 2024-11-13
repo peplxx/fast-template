@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from pathlib import Path
 
-from app.src.modules.time import utcnow
 
 env_path = Path(__file__).parents[3] / '.env'
 load_dotenv(dotenv_path=env_path)
@@ -31,7 +30,6 @@ class DefaultSettings(BaseSettings):
     SWAGGER_PATH: Optional[str] = "/swagger"
     REDOC_PATH: Optional[str] = None
 
-    UPTIME: datetime = utcnow()
 
     # Module-defined settings
     STATIC_FILES_PATH: str = '/tmp/static'
