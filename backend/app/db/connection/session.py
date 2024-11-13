@@ -1,8 +1,9 @@
 __all__ = ["get_session"]
 
 from threading import Lock
+from typing import Annotated
 
-from sqlalchemy import select
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine
 from sqlalchemy.orm import sessionmaker
 
@@ -44,10 +45,11 @@ class SessionManager:
         self.default_engine()
 
 
-async def get_session() -> AsyncSession:
+async def get_session():
     session_maker = SessionManager().get_session_maker()
     async with session_maker() as session:
         yield session
 
 
 
+SessionDependency = Annotated[AsyncSession, Depends(get_session)]
