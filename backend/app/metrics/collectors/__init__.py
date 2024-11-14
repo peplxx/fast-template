@@ -5,7 +5,6 @@ import time
 collectors = [
     collect_system_metrics,
 ]
-
 def run_collectors():
 
     event_loop = asyncio.new_event_loop()
@@ -17,3 +16,4 @@ def run_collectors():
         except Exception as e:
             print(f"Error in collectors: {str(e)}")
             time.sleep(5)  # Wait before retry on error
+
