@@ -3,7 +3,7 @@ __all__ = ['app']
 import logging
 from fastapi import FastAPI
 
-from .common.logger import logging_settings, setup_logging  
+from .common.logging import logging_settings, setup_logging  
 
 from .common.exceptions import error_handlers
 

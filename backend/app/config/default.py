@@ -19,6 +19,7 @@ class DefaultSettings(BaseSettings):
     PROTOCOL: str = "http"
     CURRENT_HOST: str = "0.0.0.0"
     APP_PORT: int = 5000
+    PROMETHEUS_PORT: int = 5050
 
     POSTGRES_DB: str = "postgres"
     POSTGRES_HOST: str = "localhost"
@@ -56,7 +57,7 @@ class DefaultSettings(BaseSettings):
 
     @property
     def database_uri(self) -> str:
-        """ Async database uri"""
+        """ Async database uri """
         return "postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}".format(**self.database_settings)
 
     @property

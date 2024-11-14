@@ -18,6 +18,8 @@ python-multipart = "^0.0.17"
 psycopg2-binary = "^2.9.10"
 python-jose = "^3.3.0"
 passlib = "^1.7.4"
+prometheus-client = "^0.21.0"
+psutil = "^6.1.0"
 
 
 [build-system]

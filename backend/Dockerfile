@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-RUN pip install poetry
+RUN pip install poetry --timeout 120
 
 
 WORKDIR /workdir/
@@ -8,8 +8,7 @@ WORKDIR /workdir/
 COPY ./poetry.lock .
 COPY ./pyproject.toml .
 
-RUN poetry config virtualenvs.create false && poetry install --no-dev
-
+RUN poetry config virtualenvs.create false && poetry install
 
 COPY . /backend/
 
