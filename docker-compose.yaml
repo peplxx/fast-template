@@ -29,7 +29,7 @@ services:
     networks:
       - default
     volumes:
-      - ./backend/prometheus:/etc/prometheus
+      - ./prometheus:/etc/prometheus
       - prometheus-data:/prometheus
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yaml
 
@@ -41,7 +41,8 @@ services:
     ports:
       - 3333:3000
     volumes:
-      - ./backend/graphana/datasources:/etc/grafana/provisioning/datasources
+      - ./graphana/datasources:/etc/grafana/provisioning/datasources
+      - ./graphana/dashboards:/etc/grafana/provisioning/dashboards
       - grafana-data:/var/lib/grafana
 
   backend:
