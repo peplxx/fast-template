@@ -8,7 +8,7 @@ WORKDIR /workdir/
 COPY ./poetry.lock .
 COPY ./pyproject.toml .
 
-RUN poetry config virtualenvs.create false && poetry install
+RUN poetry config virtualenvs.create false && poetry install --without test
 
 COPY . /backend/
 
