@@ -1,4 +1,5 @@
 vapid-keys
-graphana
-prometheus
 link-shortener
+CI/CD
+pre-commit
+nginx

@@ -11,8 +11,14 @@ class Metrics:
     
     class General:
         responses = Counter('responses', 'Responses', labelnames=['status_code', 'endpoint', 'method'])
-        request_latency_ms = Histogram('request_latency_ms', 'Time spent processing request', 
-                                     labelnames=['method', 'endpoint', 'status_code'])
+        LATENCY_BUCKETS = [5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000]
+        
+        request_latency_ms = Histogram(
+            'request_latency_ms',
+            'Time spent processing request',
+            labelnames=['method', 'endpoint', 'status_code'],
+            buckets=LATENCY_BUCKETS
+        )
 
     system: System = System()
     general: General = General()
