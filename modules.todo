@@ -1,6 +1,5 @@
 vapid-keys / webpush
 link-shortener
-CI/CD
+CD
 pre-commit
-nginx
 limiter
