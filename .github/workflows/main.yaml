@@ -1,0 +1,53 @@
+name: Backend Workflow
+
+on:
+  push:
+    branches: [backend, main, master]
+  pull_request:
+    branches: [backend, main, master]
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    services:
+      # Step 1: Set up PostgreSQL service
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: notimy
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U myuser"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    steps:
+    # Checkout the code from the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        export PATH="$HOME/.local/bin:$PATH"
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        cd backend
+        poetry install --with test
+
+    # Run tests with coverage
+    - name: Run tests
+      run: |
+        make test
