@@ -3,7 +3,7 @@ import psutil
 
 from ..metrics import metrics
 
-async def collect_system_metrics():
+async def system_collector():
     """Collect and update system metrics periodically"""
     while True:
         # CPU metrics

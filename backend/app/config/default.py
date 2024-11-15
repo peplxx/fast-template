@@ -34,6 +34,9 @@ class DefaultSettings(BaseSettings):
     SWAGGER_PATH: Optional[str] = "/swagger"
     REDOC_PATH: Optional[str] = None
     
+    # Flags 
+    TESTING: bool = False
+
     @property
     def current_host_url(self) -> str:
         return f"{self.PROTOCOL}://{self.CURRENT_HOST}:{self.APP_PORT}"

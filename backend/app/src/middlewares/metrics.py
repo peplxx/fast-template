@@ -1,10 +1,9 @@
+from time import perf_counter
+
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
-from prometheus_client import Counter, Histogram
-import time
+
 from app.metrics.metrics import metrics
-from ..modules.time import utcnow
-from time import perf_counter
 
 class MetricsMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):

@@ -17,7 +17,7 @@ endif
 
 
 
-run-local: ##@Run application locally
+run-local: ##@Run Run app locally
 	make -C backend run-local
 
 test: ##@Tests Run tests
