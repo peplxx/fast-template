@@ -3,6 +3,7 @@ from ..base import BaseModule
 from .routes import router
 from .services import FileService
 from .exceptions import FileNotFoundException, InvalidFileException
+from .settings import StaticFileSettings, settings
 class StaticModule(BaseModule):
     NAME = "static"
     DESCRIPTION = "Module for handling static files and file upload s"
@@ -22,6 +23,7 @@ class StaticModule(BaseModule):
         "name": "Static Files",
         "description": "Operations with static files including upload and retrieval",
     }]
+    AUTH_SETTINGS: StaticFileSettings = settings
     
     # Module configuration and health checks
     def __init__(self):

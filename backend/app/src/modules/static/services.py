@@ -4,13 +4,12 @@ from typing import AsyncIterator
 from uuid import uuid4
 from fastapi import HTTPException, UploadFile
 
-from app.config import get_settings
 from .exceptions import FileNotFoundException, InvalidFileException
 from starlette import status
-
+from .settings import settings
 
 class FileService:
-    STORAGE_PATH: str = get_settings().STATIC_FILES_PATH
+    STORAGE_PATH: str = settings.STATIC_FILES_PATH
     @staticmethod
     def _get_filename(filename: str) -> str:
         if "/" in filename:

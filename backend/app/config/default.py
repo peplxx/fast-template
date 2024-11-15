@@ -45,8 +45,6 @@ class DefaultSettings(BaseSettings):
     def auth_basic_authentication_url(self) -> str:
         return f"{self.current_host_url}{self.PATH_PREFIX}/auth/basic/authentication"
     
-    # Module-defined settings
-    STATIC_FILES_PATH: str = '/tmp/static'
 
     @property
     def database_settings(self) -> dict:
