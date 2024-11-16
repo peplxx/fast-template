@@ -6,6 +6,8 @@
 
 # Cashe
 __pycache__
+.ruff_cache/
+.pytest_cache/
 
 # Enviroment
 .env
@@ -14,3 +16,5 @@ modules.todo
 
 # Logs
 logs/
+
+
