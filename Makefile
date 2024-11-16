@@ -16,9 +16,15 @@ else
 endif
 
 
-
+# TODO: add passing args to make commands
 run-local: ##@Run Run app locally
 	make -C backend run-local
+ 
+run-dev: ##@Run Run app in dev mode (docker compose)
+	docker compose up --build
+
+run-prod: ##@Run Run app in prod mode (docker compose)
+	docker compose -f docker-compose-prod.yml up --build
 
 test: ##@Tests Run tests
 	make -C backend test
