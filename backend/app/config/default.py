@@ -1,5 +1,4 @@
 import ssl
-from datetime import datetime
 from typing import Optional
 
 from dotenv import load_dotenv
@@ -7,7 +6,7 @@ from pydantic_settings import BaseSettings
 from pathlib import Path
 
 
-env_path = Path(__file__).parents[3] / '.env'
+env_path = Path(__file__).parents[3] / ".env"
 load_dotenv(dotenv_path=env_path)
 
 
@@ -33,18 +32,17 @@ class DefaultSettings(BaseSettings):
 
     SWAGGER_PATH: Optional[str] = "/swagger"
     REDOC_PATH: Optional[str] = None
-    
-    # Flags 
+
+    # Flags
     TESTING: bool = False
 
     @property
     def current_host_url(self) -> str:
         return f"{self.PROTOCOL}://{self.CURRENT_HOST}:{self.APP_PORT}"
-    
+
     @property
     def auth_basic_authentication_url(self) -> str:
         return f"{self.current_host_url}{self.PATH_PREFIX}/auth/basic/authentication"
-    
 
     @property
     def database_settings(self) -> dict:
@@ -58,17 +56,22 @@ class DefaultSettings(BaseSettings):
 
     @property
     def database_uri(self) -> str:
-        """ Async database uri """
-        return "postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}".format(**self.database_settings)
+        """Async database uri"""
+        return "postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}".format(
+            **self.database_settings
+        )
 
     @property
     def database_uri_sync(self) -> str:
-        """ Sync database uri """
-        return "postgresql://{user}:{password}@{host}:{port}/{database}".format(**self.database_settings)
+        """Sync database uri"""
+        return "postgresql://{user}:{password}@{host}:{port}/{database}".format(
+            **self.database_settings
+        )
 
     @property
     def db_context(self) -> dict:
-        if not self.DB_USE_SSL: return {}
+        if not self.DB_USE_SSL:
+            return {}
         ssl_context = ssl.create_default_context(cafile=self.DB_SSL_KEY_PATH)
         ssl_context.verify_mode = ssl.CERT_REQUIRED
         return {"ssl": ssl_context}

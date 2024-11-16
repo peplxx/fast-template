@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter
 from .basic.routes import router as basic_router
 

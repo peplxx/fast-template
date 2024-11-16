@@ -8,6 +8,7 @@ from app.config import get_settings
 
 settings = get_settings()
 
+
 async def lifespan(app: FastAPI):
     start_http_server(settings.PROMETHEUS_PORT)
     event_loop = asyncio.get_event_loop()

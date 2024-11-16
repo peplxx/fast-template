@@ -12,8 +12,9 @@ from app.config import get_settings
 PROJECT_PATH = Path(__file__).parent.parent.resolve()
 
 
-
-def make_alembic_config(cmd_opts: Union[Namespace, SimpleNamespace], base_path: Path = PROJECT_PATH) -> Config:
+def make_alembic_config(
+    cmd_opts: Union[Namespace, SimpleNamespace], base_path: Path = PROJECT_PATH
+) -> Config:
     """
     Creates an alembic configuration object based on command line arguments,
     replaces relative paths with absolute ones.
@@ -30,7 +31,10 @@ def make_alembic_config(cmd_opts: Union[Namespace, SimpleNamespace], base_path: 
     # Replace alembic folder path with absolute path
     alembic_location = config.get_main_option("script_location")
     if not os_path.isabs(alembic_location):
-        config.set_main_option("script_location", os_path.join(base_path, path_to_folder + alembic_location))
+        config.set_main_option(
+            "script_location",
+            os_path.join(base_path, path_to_folder + alembic_location),
+        )
     if cmd_opts.pg_url:
         config.set_main_option("sqlalchemy.url", database_uri)
 

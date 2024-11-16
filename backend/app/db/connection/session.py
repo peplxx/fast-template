@@ -30,7 +30,9 @@ class SessionManager:
 
     def get_session_maker(self) -> sessionmaker:
         if not self.session_maker:
-            self.session_maker = sessionmaker(self.engine, class_=AsyncSession, expire_on_commit=False)
+            self.session_maker = sessionmaker(
+                self.engine, class_=AsyncSession, expire_on_commit=False
+            )
         return self.session_maker
 
     def default_engine(self):
@@ -38,7 +40,7 @@ class SessionManager:
             get_settings().database_uri,
             echo=True,
             future=True,
-            connect_args=settings.db_context
+            connect_args=settings.db_context,
         )
 
     def refresh(self) -> None:
@@ -49,7 +51,6 @@ async def get_session():
     session_maker = SessionManager().get_session_maker()
     async with session_maker() as session:
         yield session
-
 
 
 SessionDependency = Annotated[AsyncSession, Depends(get_session)]

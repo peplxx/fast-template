@@ -15,20 +15,26 @@ repos:
       - id: ruff
         args: [ --fix, --exit-zero ]
         name: "ruff: fixing"
+        files: ^backend/
       - id: ruff-format
         name: "ruff: formatting"
+        files: ^backend/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.7.4
     hooks:
       - id: ruff
         name: "ruff: linting"
+        files: ^backend/
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
       - id: trailing-whitespace
         exclude: "alembic/"
+        files: ^backend/
       - id: end-of-file-fixer
         exclude: "alembic/"
+        files: ^backend/
       - id: check-added-large-files
+        files: ^backend/

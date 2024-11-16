@@ -9,19 +9,18 @@ from ...modules.time import TimeModule, str_utcnow
 
 router = APIRouter(
     tags=["Healthcheck"],
-
 )
 settings = get_settings()
 
 
 @router.get(
-    '/ping',
+    "/ping",
     response_class=JSONResponse,
     status_code=status.HTTP_200_OK,
     response_model=PingResponse,
 )
 async def ping(request: Request):
-    """ Simple endpoint to check if the server is up """
+    """Simple endpoint to check if the server is up"""
     return {
         "message": "The server is up!",
         "uptime": TimeModule.UPTIME,
@@ -30,5 +29,5 @@ async def ping(request: Request):
         "server_time": str_utcnow(),
         "services": {
             "database": "Ok" if await database_healthcheck() else "Down",
-        }
+        },
     }

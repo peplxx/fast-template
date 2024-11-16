@@ -1,6 +1,9 @@
-""" Module for managing time-related functionalities """
+"""Module for managing time-related functionalities"""
+
 from ..base import BaseModule
-from .now import *
+from .now import now, utcnow, str_utcnow, str_now
+from datetime import timedelta
+
 
 class TimeModule(BaseModule):
     NAME: str = "time"
@@ -15,7 +18,8 @@ class TimeModule(BaseModule):
     DEPENDENCIES: list = []
     TAGS: list = []
     ROUTERS: list = []
-    
+
     UPTIME: timedelta = utcnow()
+
 
 __all__ = ["TimeModule", *TimeModule.EXPORTS.keys()]

@@ -16,9 +16,9 @@ from .schemas import RegistrationForm
 from .exceptions import IncorrectCredentialsException
 from ..settings import settings
 
+
 async def get_user(session: AsyncSession, username: str) -> Optional[User]:
     return await session.scalar(select(User).where(User.username == username))
-
 
 
 async def authenticate_user(
@@ -42,7 +42,6 @@ def verify_password(
     return pwd_context.verify(plain_password, hashed_password)
 
 
-
 async def get_current_user(
     session: SessionDependency,
     token: str = Depends(settings.OAUTH2_SCHEME),
@@ -52,9 +51,13 @@ async def get_current_user(
     if user is None:
         raise IncorrectCredentialsException()
     return user
+
+
 def decode_token(token: str) -> dict:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = jwt.decode(
+            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+        )
         return payload
     except JWTError:
         raise IncorrectCredentialsException()
@@ -73,8 +76,12 @@ def create_token(
     return encoded_jwt
 
 
-async def register_user(session: AsyncSession, potential_user: RegistrationForm) -> tuple[bool, str]:
-    existing_user = await session.scalar(select(User).where(User.username == potential_user.username))
+async def register_user(
+    session: AsyncSession, potential_user: RegistrationForm
+) -> tuple[bool, str]:
+    existing_user = await session.scalar(
+        select(User).where(User.username == potential_user.username)
+    )
 
     if existing_user:
         return False, "User with such username already exists."

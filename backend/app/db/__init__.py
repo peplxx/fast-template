@@ -22,6 +22,6 @@ class DeclarativeBase(AsyncAttrs, Base):
     __abstract__ = True
 
     def dict(self) -> dict:
-        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
-
-
+        return {
+            column.name: getattr(self, column.name) for column in self.__table__.columns
+        }

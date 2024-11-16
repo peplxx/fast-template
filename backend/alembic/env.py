@@ -5,11 +5,11 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from app.db import DeclarativeBase
-from app.db.models import *  # noqua
+from app.db.models import *  # noqa: F403
 from app.config import get_settings
 from dotenv import load_dotenv
 
-env_path = Path(__file__).parents[2] / '.env'
+env_path = Path(__file__).parents[2] / ".env"
 load_dotenv(dotenv_path=env_path)
 
 settings = get_settings()
@@ -18,7 +18,9 @@ section = config.config_ini_section
 config.set_section_option(section, "POSTGRES_DB", settings.POSTGRES_DB)
 config.set_section_option(section, "POSTGRES_HOST", settings.POSTGRES_HOST)
 config.set_section_option(section, "POSTGRES_USER", settings.POSTGRES_USER)
-config.set_section_option(section, "POSTGRES_PASSWORD", settings.POSTGRES_PASSWORD.replace('%', "%%"))
+config.set_section_option(
+    section, "POSTGRES_PASSWORD", settings.POSTGRES_PASSWORD.replace("%", "%%")
+)
 config.set_section_option(section, "POSTGRES_PORT", str(settings.POSTGRES_PORT))
 
 # Interpret the config file for Python logging.
@@ -77,9 +79,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

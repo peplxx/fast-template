@@ -1,9 +1,9 @@
-__all__ = ['app']
+__all__ = ["app"]
 
 import logging
 from fastapi import FastAPI
 
-from .common.logging import logging_settings, setup_logging  
+from .common.logging import logging_settings, setup_logging
 
 from .common.exceptions import error_handlers
 
@@ -12,6 +12,7 @@ from .middlewares import middlewares
 from .routers import routers
 from ..config import get_settings
 from .lifespan import lifespan
+
 settings = get_settings()
 
 app = FastAPI(
@@ -32,7 +33,6 @@ for error_type, handler in error_handlers.items():
 
 logger = setup_logging()
 
-if logging_settings.ENABLE_SQLALCHEMY_LOGGING: 
+if logging_settings.ENABLE_SQLALCHEMY_LOGGING:
     logger.warning("Enable sqlalchemy logging")
     logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
-

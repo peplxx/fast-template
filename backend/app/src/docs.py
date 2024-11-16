@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from app.src.modules import modules
 
+
 class ProjectDocs(BaseModel):
     # Info for OpenAPI specification
     class OpenAPI:
@@ -29,9 +30,13 @@ class ProjectDocs(BaseModel):
             #     "name": "Example Tag",
             #     "description": "Example Tag Description",
             # },
-
             # Here you can define tags for your API automatically from modules
-            *[tag for module in modules if hasattr(module, "TAGS") for tag in module.TAGS]
+            *[
+                tag
+                for module in modules
+                if hasattr(module, "TAGS")
+                for tag in module.TAGS
+            ]
         ]
 
         @property
