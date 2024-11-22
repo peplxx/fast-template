@@ -53,7 +53,9 @@ async def async_engine(postgres, logger):
         config="", name="alembic", pg_url=postgres, raiseerr=False, x=None
     )
     alembic_config = make_alembic_config(cmd_options)
-    engine = create_async_engine(postgres, future=True, echo=True, poolclass=NullPool)
+    engine = create_async_engine(
+        postgres, future=True, echo=True, poolclass=NullPool, pool_pre_ping=True
+    )
     await run_async_upgrade(alembic_config, engine, logger)
     try:
         yield engine
@@ -61,15 +63,15 @@ async def async_engine(postgres, logger):
         await engine.dispose()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope="function")
 async def session(async_engine):
     """Create a new session for each test session"""
     async_session = sessionmaker(
-        bind=async_engine, class_=AsyncSession, expire_on_commit=False
+        bind=async_engine,
+        class_=AsyncSession,
+        expire_on_commit=False,
+        autocommit=False,
+        autoflush=False,
     )
     async with async_session() as session:
-        try:
-            yield session
-        finally:
-            await session.close()
-            await session.rollback()
+        yield session

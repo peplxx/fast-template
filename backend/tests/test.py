@@ -1,4 +1,3 @@
-import pytest
 from httpx import AsyncClient
 from tests.fixtures import url
 
@@ -11,9 +10,7 @@ testsuites = reduce(
 )  # Get all testsuites from all modules
 
 
-@pytest.mark.asyncio
 class TestMain(*testsuites):
-    @pytest.mark.asyncio
     async def test_ping(self, client: AsyncClient):
         response = await client.get(url("/ping"))
         assert response.status_code == 200
