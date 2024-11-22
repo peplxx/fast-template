@@ -38,7 +38,7 @@ class DefaultSettings(BaseSettings):
 
     @property
     def current_host_url(self) -> str:
-        return f"{self.PROTOCOL}://{self.CURRENT_HOST}:{self.APP_PORT}"
+        return f"{self.PROTOCOL}://{self.CURRENT_HOST}"
 
     @property
     def auth_basic_authentication_url(self) -> str:

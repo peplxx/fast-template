@@ -1,4 +1,3 @@
-from datetime import timedelta
 from fastapi import Depends
 
 from app.db.connection.session import SessionDependency
@@ -6,15 +5,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Annotated, Optional
 from sqlalchemy import select
 from app.db.models import User
-from jose import jwt, JWTError
 from uuid import UUID
 
-from app.src.modules.time import utcnow
 from .schemas import RegistrationForm
 
 
 from .exceptions import IncorrectCredentialsException
 from ..settings import settings
+from ..jwt import decode_token
 
 
 async def get_user(session: AsyncSession, username: str) -> Optional[User]:
@@ -53,36 +51,12 @@ async def get_current_user(
     return user
 
 
-def decode_token(token: str) -> dict:
-    try:
-        payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
-        )
-        return payload
-    except JWTError:
-        raise IncorrectCredentialsException()
-
-
-def create_token(
-    payload: dict,
-    expires_delta: Optional[timedelta] = None,
-):
-    if expires_delta:
-        expire = utcnow() + expires_delta
-    else:
-        expire = utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-    payload.update({"exp": expire})
-    encoded_jwt = jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
-    return encoded_jwt
-
-
 async def register_user(
     session: AsyncSession, potential_user: RegistrationForm
 ) -> tuple[bool, str]:
     existing_user = await session.scalar(
         select(User).where(User.username == potential_user.username)
     )
-
     if existing_user:
         return False, "User with such username already exists."
 

@@ -5,7 +5,8 @@ from datetime import timedelta
 
 from app.db.connection import get_session
 from ..settings import settings
-from .utils import UserDependency, authenticate_user, create_token, register_user
+from .utils import UserDependency, authenticate_user, register_user
+from ..jwt import create_token
 from .schemas import (
     RegistrationForm,
     RegistrationSuccess,
@@ -26,14 +27,6 @@ router = APIRouter(prefix="/basic", tags=["Basic Authentication"])
         "401": {"description": "Incorrect credentials"},
     },
 )
-@router.options(
-    "/authentication",
-    status_code=status.HTTP_200_OK,
-    response_model=Token,
-    responses={
-        "401": {"description": "Incorrect credentials"},
-    },
-)
 async def authentication(
     _: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
@@ -42,8 +35,10 @@ async def authentication(
     user: User = await authenticate_user(
         session, form_data.username, form_data.password
     )
+
     if not user:
         raise IncorrectCredentialsException()
+
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_token(
         payload={"sub": str(user.id)}, expires_delta=access_token_expires
