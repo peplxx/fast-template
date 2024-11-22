@@ -1,4 +1,4 @@
-__all__ = ["get_session"]
+__all__ = ["get_session", "SessionDependency"]
 
 from threading import Lock
 from typing import Annotated

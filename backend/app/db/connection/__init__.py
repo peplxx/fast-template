@@ -1,3 +1,3 @@
-__all__ = ["get_session"]
+__all__ = ["get_session", "SessionDependency"]
 
-from app.db.connection.session import get_session
+from app.db.connection.session import get_session, SessionDependency
