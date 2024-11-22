@@ -6,6 +6,7 @@ origins = [
     "http://localhost",
     "https://localhost",
     "http://localhost:5000",
+    "http://test",
     # Place your origins here #
 ]
 settings = {

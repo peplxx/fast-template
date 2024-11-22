@@ -9,7 +9,7 @@ from configargparse import Namespace
 from app.config import get_settings
 
 
-PROJECT_PATH = Path(__file__).parent.parent.resolve()
+PROJECT_PATH = Path(__file__).parent.parent.parent.resolve()
 
 
 def make_alembic_config(

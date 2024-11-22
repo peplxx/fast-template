@@ -6,6 +6,7 @@ from httpx import AsyncClient, Cookies
 
 from app.config import get_settings
 from app.src.app import app
+from fixtures import *  # noqa : F403
 
 settings = get_settings()
 
