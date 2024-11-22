@@ -2,6 +2,7 @@ from ..base import BaseModule
 from .settings import AuthSettings, settings
 from .routes import router
 from .basic.utils import UserDependency
+from tests.testsuites.auth import testsuites
 
 
 class AuthModule(BaseModule):
@@ -23,6 +24,7 @@ class AuthModule(BaseModule):
     ROUTERS: list = [router]
 
     AUTH_SETTINGS: AuthSettings = settings
+    TESTSUITES = testsuites
 
 
 __all__ = ["AuthModule", *AuthModule.EXPORTS.keys()]

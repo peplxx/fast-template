@@ -9,6 +9,7 @@ class BaseModule(ABC):
     DEPENDENCIES: list = []
     TAGS: list = []
     ROUTERS: list = []
+    TESTSUITES: list = []
 
     @abstractmethod
     def upgrade(self) -> bool:

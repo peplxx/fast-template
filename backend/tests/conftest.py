@@ -8,11 +8,8 @@ from app.config import get_settings
 from app.src.app import app
 from fixtures import *  # noqa : F403
 
+
 settings = get_settings()
-
-
-def url(path: str) -> str:
-    return f"{settings.PATH_PREFIX}{path}"
 
 
 clients_params = {
