@@ -12,3 +12,17 @@
 [![Nginx](https://img.shields.io/badge/Nginx-009639.svg?style=flat&logo=nginx&logoColor=white)](https://nginx.org)
 
 A production-ready FastAPI template with comprehensive integrations for modern web development.
+
+## Overview
+
+This template provides a solid foundation for building production-ready web services with FastAPI. It combines modern tools and best practices to help you get started quickly:
+
+- **Core Stack**: FastAPI + PostgreSQL + SQLAlchemy
+- **Deployment**: Docker + Nginx configuration ready to go
+- **Monitoring**: Prometheus metrics and Grafana dashboards
+- **Development**: Poetry for dependencies, Ruff for linting, pytest for testing
+- **CI/CD**: GitHub Actions workflow included
+
+Everything is pre-configured and tested to work together. Just clone, customize, and start building your application.
+
+
