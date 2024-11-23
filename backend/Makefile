@@ -1,4 +1,4 @@
-.PHONY: run-local, test, migrate, revision
+.PHONY: run-local, test, migrate, revision, module
 
 run-local:
 	poetry run python3 -m app
@@ -11,3 +11,6 @@ migrate:
 
 revision:
 	alembic revision --autogenerate
+
+module:
+	python3 .utils/templates/module/__main__.py "$(name)" "$(description)"
