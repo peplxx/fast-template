@@ -48,7 +48,7 @@ gen-ssl: ##@Generators SSL key and certificate to ./certs directory
 gen-hex32: ##@Generators Generate random hex string of 32 characters
 	openssl rand -hex 32
 
-module: ##@Generators Generate a new module with the given name, description
+module: ##@Generators Generate a new module with the given name, description (eg. make module name=users description="Users management module")
 	make -C backend module name=$(name) description=$(description)
 
 help: ##@Help Show this help

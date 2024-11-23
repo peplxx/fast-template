@@ -12,5 +12,5 @@ migrate:
 revision:
 	alembic revision --autogenerate
 
-module:
+module: ##@Generators Generate a new module with the given name, description (eg. make module name=users description="Users management module")
 	python3 .utils/templates/module/__main__.py "$(name)" "$(description)"
