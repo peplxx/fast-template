@@ -37,6 +37,12 @@ class DefaultSettings(BaseSettings):
     TESTING: bool = False
 
     @property
+    def limiter_enabled(self) -> bool:
+        if self.TESTING:
+            return False
+        return True
+
+    @property
     def current_host_url(self) -> str:
         return f"{self.PROTOCOL}://{self.CURRENT_HOST}"
 

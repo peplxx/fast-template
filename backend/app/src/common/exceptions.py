@@ -4,6 +4,8 @@ __all__ = [
 
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
+from .limiter import rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 
 def http_exception_handler(request, exc: HTTPException):
@@ -15,4 +17,7 @@ def http_exception_handler(request, exc: HTTPException):
     )
 
 
-error_handlers = {HTTPException: http_exception_handler}
+error_handlers = {
+    HTTPException: http_exception_handler,
+    RateLimitExceeded: rate_limit_exceeded_handler,
+}

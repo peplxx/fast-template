@@ -6,6 +6,7 @@ from app.config import get_settings
 from .health import database_healthcheck
 from .schemas import PingResponse
 from ...modules.time import TimeModule, str_utcnow
+from ...common.limiter import limiter
 
 router = APIRouter(
     tags=["Healthcheck"],
@@ -19,6 +20,7 @@ settings = get_settings()
     status_code=status.HTTP_200_OK,
     response_model=PingResponse,
 )
+@limiter.limit("1/second")
 async def ping(request: Request):
     """Simple endpoint to check if the server is up"""
     return {
