@@ -8,7 +8,7 @@ from app.config import get_settings
 from app.src.app import app
 from fixtures import *  # noqa : F403
 
-
+get_settings().TESTING = True
 settings = get_settings()
 
 

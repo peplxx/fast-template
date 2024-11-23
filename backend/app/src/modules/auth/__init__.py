@@ -2,7 +2,11 @@ from ..base import BaseModule
 from .settings import AuthSettings, settings
 from .routes import router
 from .basic.utils import UserDependency
-from tests.testsuites.auth import testsuites
+
+try:  # Tests are not included in Docker container
+    from tests.testsuites.auth import testsuites
+except ImportError:
+    testsuites = []
 
 
 class AuthModule(BaseModule):
