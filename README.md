@@ -161,7 +161,9 @@ Modules in this project use base classes to automatically resolve module metadat
 <summary>1. Generating new module</summary>
 
 #### 1. Generate new module
-To generate new module you can use `make module` command. This command will generate new module with the given name and description, also it will setup a testsuite for this module in `backend/tests/testsuites/{module-name}` directory.
+To generate new module you can use `make module` command. 
+
+This command will generate new module with the given name and description, also it will setup a testsuite for this module in `backend/tests/testsuites/{module-name}` directory.
 
 ```bash
 make module name=<module-name> description=<module-description>
@@ -185,6 +187,7 @@ After you need to import module in `backend/app/src/modules/__init__.py` file ma
 #### 3. Ready to go!
 
 Now you can start developing your module in `backend/app/src/modules/{module-name}` directory.
+
 And tests in `backend/tests/testsuites/{module-name}` directory.
 
 </details>
