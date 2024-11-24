@@ -69,6 +69,7 @@ services:
     image: nginx:latest
     ports:
       - "443:443" # HTTPS
+      - "80:80" # HTTP (upgrade to https)
     volumes:
       - ./nginx/nginx-prod.conf:/etc/nginx/nginx.conf # Prod Nginx configuration
       - ./certs:/etc/ssl # SSL certificates
