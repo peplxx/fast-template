@@ -2,11 +2,25 @@ ifeq ($(shell test -e '.env' && echo -n yes),yes)
 	include .env
 endif
 
+BLUE := \033[34m
+GREEN := \033[32m
+YELLOW := \033[33m
+RESET := \033[0m
+
 HELP_FUN = \
-	%help; while(<>){push@{$$help{$$2//'options'}},[$$1,$$3] \
-	if/^([\w-_]+)\s*:.*\#\#(?:@(\w+))?\s(.*)$$/}; \
-    print"$$_:\n", map"  $$_->[0]".(" "x(20-length($$_->[0])))."$$_->[1]\n",\
-    @{$$help{$$_}},"\n" for keys %help; \
+    %help; \
+    printf "\n${BLUE}Usage:${RESET}\n  make ${YELLOW}<target>${RESET}\n\n"; \
+    while(<>) { \
+        if(/^([a-zA-Z0-9_-]+):.*\#\#(?:@([a-zA-Z0-9_-]+))?\s(.*)$$/) { \
+            push(@{$$help{$$2 // 'Other'}}, [$$1, $$3]); \
+        } \
+    }; \
+    printf "${BLUE}Targets:${RESET}\n"; \
+    for (sort keys %help) { \
+        printf "${GREEN}%s:${RESET}\n", $$_; \
+        printf "  %-20s %s\n", $$_->[0], $$_->[1] for @{$$help{$$_}}; \
+        print "\n"; \
+    }
 
 args := $(wordlist 2, 100, $(MAKECMDGOALS))
 ifndef args
@@ -16,14 +30,16 @@ else
 endif
 
 
-# TODO: add passing args to make commands
-run-local: ##@Run Run app locally
-	make -C backend run-local
- 
-run-dev: ##@Run Run app in dev mode (docker compose)
+run-local: ##@Run Run app in local mode (backend(local) + database(docker)) [docker-compose.yaml]
+	make run-db && make -C backend run-local
+
+run-dev1: ##@Run Run app in dev1 mode  (nginx(http) + backend + database) [docker-compose.yaml]
+	docker compose up --build database backend nginx
+
+run-dev2: ##@Run Run app in dev2 mode  (nginx(http) + backend + database + graphana + prometheus) [docker-compose.yaml]
 	docker compose up --build
 
-run-prod: ##@Run Run app in prod mode (docker compose)
+run-prod: ##@Run Run app in prod mode  (nginx(https) + backend + database + graphana + prometheus) [docker-compose-prod.yaml]
 	docker compose -f docker-compose-prod.yml up --build
 
 test: ##@Tests Run tests
@@ -32,13 +48,13 @@ test: ##@Tests Run tests
 psql:##@Database Connect to database via psql
 	psql -d $(POSTGRES_DB) -U $(POSTGRES_USER)
 
-run-db: ##@Database Run database container
+run-db: ##@Database Run database container [docker-compose.yaml]
 	docker compose up --build -d database
 
-migrate: ##@Database Run migrations
+migrate: ##@Database Apply migrations
 	make -C backend migrate
 
-revision: ##@Database Create revision
+revision: ##@Database Create new revision
 	make -C backend revision
 
 gen-ssl: ##@Generators SSL key and certificate to ./certs directory
