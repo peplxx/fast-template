@@ -30,13 +30,13 @@ else
 endif
 
 
-run-local: ##@Run Run app in local mode (backend(local) + database(docker)) [docker-compose.yaml]
+run-local: ##@Run Run app in local mode (backend(local) + database(docker))                         [docker-compose.yaml]
 	make run-db && make -C backend run-local
 
-run-dev1: ##@Run Run app in dev1 mode  (nginx(http) + backend + database) [docker-compose.yaml]
+run-dev1: ##@Run Run app in dev1 mode  (nginx(http) + backend + database)                          [docker-compose.yaml]
 	docker compose up --build database backend nginx
 
-run-dev2: ##@Run Run app in dev2 mode  (nginx(http) + backend + database + graphana + prometheus) [docker-compose.yaml]
+run-dev2: ##@Run Run app in dev2 mode  (nginx(http) + backend + database + graphana + prometheus)  [docker-compose.yaml]
 	docker compose up --build
 
 run-prod: ##@Run Run app in prod mode  (nginx(https) + backend + database + graphana + prometheus) [docker-compose-prod.yaml]
