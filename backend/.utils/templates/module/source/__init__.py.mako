@@ -6,8 +6,8 @@ try:  # Tests are not included in Docker container
 except ImportError:
     testsuites = []
 
-class ${module_name}Module(BaseModule):
-    NAME: str = "${module_name} module"
+class ${module_name.title()}Module(BaseModule):
+    NAME: str = "${module_name.title()} module"
     DESCRIPTION: str = "${module_description}"
     VERSION: str = "${version}"
     EXPORTS: dict = {}
@@ -16,4 +16,4 @@ class ${module_name}Module(BaseModule):
     ROUTERS: list = [router]
     TESTSUITES: list = testsuites
 
-__all__ = ["${module_name}Module", *${module_name}Module.EXPORTS.keys()]
+__all__ = ["${module_name.title()}Module", *${module_name.title()}Module.EXPORTS.keys()]
