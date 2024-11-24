@@ -74,5 +74,8 @@ help: ##@Help Show this help
 env: ##@Environment Create .env file from .env.example
 	cp .env.example .env
 
+poetry: ##@Environment Setup poetry environment
+	cd backend && poetry install --no-root
+
 %::
 	echo $(MESSAGE)
