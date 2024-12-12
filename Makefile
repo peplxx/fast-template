@@ -30,7 +30,7 @@ else
 endif
 
 
-run-local: ##@Run Run app in local mode (backend(local) + database(docker))                         [docker-compose.yaml]
+run-local: poetry run-db migrate  ##@Run Run app in local mode (backend(local) + database(docker))                         [docker-compose.yaml]
 	make run-db && make -C backend run-local
 
 run-dev1: ##@Run Run app in dev1 mode  (nginx(http) + backend + database)                          [docker-compose.yaml]
@@ -54,7 +54,7 @@ run-db: ##@Database Run database container [docker-compose.yaml]
 migrate: ##@Database Apply migrations
 	make -C backend migrate
 
-revision: ##@Database Create new revision
+revision: migrate ##@Database Create new revision
 	make -C backend revision
 
 gen-ssl: ##@Generators SSL key and certificate to ./certs directory
