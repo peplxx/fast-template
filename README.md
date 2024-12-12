@@ -77,7 +77,7 @@ Choose your configuration:
 ```bash
 make <target-config>
 ```
-> **Note:** For local development, run `make poetry` first to setup your environment.
+> **Local setup:** starts database, setup poetry and make migrations besides runing app itself.
 ---
 ### How to develop
 
