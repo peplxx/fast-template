@@ -8,7 +8,6 @@ class ProjectDocs(BaseModel):
         VERSION = "0.1.0"
         WEBSITE_URL = "https://example.com"
         TITLE = "Project Title"
-        SUMMARY = "Project Summary"
         DESCRIPTION = """Project Description"""
 
         @property
@@ -21,7 +20,6 @@ class ProjectDocs(BaseModel):
 
         LICENSE_INFO = {
             "name": "MIT License",
-            "identifier": "MIT",
         }
 
         TAGS_INFO = [
@@ -43,7 +41,6 @@ class ProjectDocs(BaseModel):
         def specification(self) -> dict:
             return {
                 "title": self.TITLE,
-                "summary": self.SUMMARY,
                 "description": self.DESCRIPTION,
                 "version": self.VERSION,
                 "contact": self.CONTACT_INFO,
