@@ -32,6 +32,7 @@ class DefaultSettings(BaseSettings):
 
     SWAGGER_PATH: Optional[str] = "/swagger"
     REDOC_PATH: Optional[str] = None
+    SCALAR_PATH: Optional[str] = "/scalar"
 
     # Flags
     TESTING: bool = False

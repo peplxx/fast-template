@@ -2,6 +2,7 @@ __all__ = ["app"]
 
 import logging
 from fastapi import FastAPI
+from scalar_fastapi import get_scalar_api_reference
 
 from .common.logging import logging_settings, setup_logging
 
@@ -14,6 +15,7 @@ from ..config import get_settings
 from .lifespan import lifespan
 
 settings = get_settings()
+
 
 app = FastAPI(
     **project.specification,
@@ -36,3 +38,13 @@ logger = setup_logging()
 if logging_settings.ENABLE_SQLALCHEMY_LOGGING:
     logger.warning("Enable sqlalchemy logging")
     logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+
+if settings.SCALAR_PATH:
+
+    @app.get(settings.SCALAR_PATH, include_in_schema=False)
+    async def scalar_html():
+        return get_scalar_api_reference(
+            openapi_url=app.openapi_url,
+            title=app.title,
+            hide_models=True,
+        )
