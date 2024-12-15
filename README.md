@@ -43,7 +43,7 @@ Everything is pre-configured and tested to work together. Just clone, customize,
 
 You'll need these tools installed:
 
-- [Docker](https://docs.docker.com/get-docker/)
+- [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Make](https://www.gnu.org/software/make/)
 ---
