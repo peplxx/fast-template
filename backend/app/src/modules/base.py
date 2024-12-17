@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 
 
 class BaseModule(ABC):
@@ -10,13 +10,3 @@ class BaseModule(ABC):
     TAGS: list = []
     ROUTERS: list = []
     TESTSUITES: list = []
-
-    @abstractmethod
-    def upgrade(self) -> bool:
-        """Set up module dependencies and infrastructure"""
-        pass
-
-    @abstractmethod
-    def downgrade(self) -> bool:
-        """Remove module dependencies and cleanup infrastructure"""
-        pass
