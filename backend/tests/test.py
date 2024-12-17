@@ -1,5 +1,5 @@
 from httpx import AsyncClient
-from tests.fixtures import url
+from fixtures import url
 
 # Init testsuites
 from functools import reduce
