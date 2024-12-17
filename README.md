@@ -46,6 +46,8 @@ You'll need these tools installed:
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Make](https://www.gnu.org/software/make/)
+
+>**Quick Install:** run `./deploy/dependencies.sh` to install requirements
 ---
 ### How to navigate in project
 
