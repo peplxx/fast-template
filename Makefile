@@ -40,7 +40,7 @@ run-dev2: ##@Run Run app in dev2 mode  (nginx(http) + backend + database + graph
 	docker compose up --build
 
 run-prod: ##@Run Run app in prod mode  (nginx(https) + backend + database + graphana + prometheus) [docker-compose-prod.yaml]
-	docker compose -f docker-compose-prod.yml up --build
+	docker compose -f docker-compose-prod.yaml up --build
 
 test: ##@Tests Run tests
 	make -C backend test

@@ -76,7 +76,7 @@ services:
     depends_on:
       - backend
 
-    pgbackups:
+  pgbackups:
     image: prodrigestivill/postgres-backup-local
     restart: always
     environment:
