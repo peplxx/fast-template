@@ -17,4 +17,6 @@ modules.todo
 # Logs
 logs/
 
+# Backups folder
+backup/
 
