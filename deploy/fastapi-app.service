@@ -5,10 +5,10 @@ Requires=docker.service
 
 [Service]
 Restart=always
-User=username
-WorkingDirectory=FILL_THE_PATH
-ExecStart=/usr/bin/make run-prod
-ExecStop=/usr/bin/make down-prod
+User=peplxx
+WorkingDirectory=/home/peplxx/PycharmProjects/fast-template
+ExecStart=make run-prod
+ExecStop=make down-prod
 
 [Install]
 WantedBy=multi-user.target
