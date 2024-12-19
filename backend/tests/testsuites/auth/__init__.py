@@ -1,5 +1,13 @@
-from .basic import TestBasicAuth
+# Import your TestClasses here!
+from .default import TestBasicAuth
+from ..base import BaseTestSuite
 
-testsuites = [TestBasicAuth]
 
-__all__ = ["testsuites"]
+class AuthTestSuite(BaseTestSuite):
+    MODULE_NAME: str = "Auth"
+    TEST_CLASSES: list = [
+        TestBasicAuth,
+    ]
+
+
+__all__ = ["AuthTestSuite"]

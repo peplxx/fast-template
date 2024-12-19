@@ -3,11 +3,6 @@ from .settings import AuthSettings, settings
 from .routes import router
 from .basic.utils import UserDependency
 
-try:  # Tests are not included in Docker container
-    from tests.testsuites.auth import testsuites
-except ImportError:
-    testsuites = []
-
 
 class AuthModule(BaseModule):
     NAME: str = "Auth"
@@ -28,7 +23,7 @@ class AuthModule(BaseModule):
     ROUTERS: list = [router]
 
     AUTH_SETTINGS: AuthSettings = settings
-    TESTSUITES = testsuites
+    TESTSUITES = []
 
 
 __all__ = ["AuthModule", *AuthModule.EXPORTS.keys()]

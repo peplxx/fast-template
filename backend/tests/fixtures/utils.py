@@ -8,7 +8,7 @@ from configargparse import Namespace
 
 from app.config import get_settings
 
-__all__ = ["url", "make_alembic_config"]
+__all__ = ["make_alembic_config"]
 
 
 PROJECT_PATH = Path(__file__).parent.parent.parent.resolve()
@@ -41,7 +41,3 @@ def make_alembic_config(
         config.set_main_option("sqlalchemy.url", database_uri)
 
     return config
-
-
-def url(path: str) -> str:
-    return f"{get_settings().PATH_PREFIX}{path}"
