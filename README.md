@@ -111,7 +111,7 @@ To accelerate development process, I provide automated tools located in `/backen
 #### 1. Module Generator
 Generate a new module:
 ```bash
-make module name=<module-name> description="Module description"
+make module name=<module-name>
 ```
 
 The generator will:
