@@ -83,6 +83,12 @@ make <target-config>
 
 > **Production:** Also there is script to run prod setup as linux-unit: `/deploy/deploy-service.sh`.
 ---
+#### 3. Avaliability
+Assume, that you run app on localhost:
+ - **Backend/Swagger** : `localhost/swagger`
+ - **Backend/Scalar** : `localhost/scalar`
+ - **Graphana** :  `localhost:3333`, admin/admin
+---
 ### How to develop
 
 #### 1. Setup poetry environment
@@ -94,6 +100,7 @@ make poetry  # Installs all dependency groups (test, dev)
 ```bash
 pre-commit install
 ```
+> **Note**: ruff formatting works only for `/backend` dir
 
 **Now you're ready to develop!**
 
