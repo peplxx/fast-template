@@ -5,7 +5,7 @@ from app.src.modules import modules
 class ProjectDocs(BaseModel):
     # Info for OpenAPI specification
     class OpenAPI:
-        VERSION = "0.1.0"
+        VERSION = "0.1.2"
         WEBSITE_URL = "https://example.com"
         TITLE = "Project Title"
         DESCRIPTION = """Project Description"""
