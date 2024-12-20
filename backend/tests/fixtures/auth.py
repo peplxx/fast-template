@@ -1,6 +1,5 @@
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.src.modules.auth.basic.utils import register_user
 from app.src.modules.auth.basic.schemas import RegistrationForm
 
