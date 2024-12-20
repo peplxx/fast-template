@@ -1,29 +1,15 @@
 from httpx import AsyncClient
-import importlib
-import pkgutil
-import os
 
 # Init testsuites
-from testsuites.base import BaseTestSuite
-from functools import reduce
+from testsuites.base import BaseTestClass, BaseTestSuite
+from testsuites.utils import load_testsuites, extract_test_classes
+from app.src.modules import modules
 
-# Fetching all existing testsuites
-testsuites: list[BaseTestSuite] = []
-testsuites_dir = os.path.join(os.path.dirname(__file__), "testsuites")
-for loader, module_name, is_pkg in pkgutil.iter_modules([testsuites_dir]):
-    if is_pkg:
-        module = importlib.import_module(f"testsuites.{module_name}")
-        testsuite = getattr(module, f"{module_name.title()}TestSuite")
-        testsuites.append(testsuite)
-
-test_classes = reduce(
-    lambda x, y: x + y, [testsuite.TEST_CLASSES for testsuite in testsuites]
-)
-print(vars(test_classes[0]))
+testsuites: list[BaseTestSuite] = load_testsuites(modules)
+test_classes: list[BaseTestClass] = extract_test_classes(testsuites)
 
 
-# raise ImportError
-class TestMain(BaseTestSuite, *test_classes):
+class TestMain(*test_classes, BaseTestClass):
     async def test_ping(self, client: AsyncClient):
         response = await client.get(self.url("/ping"))
         assert response.status_code == 200
