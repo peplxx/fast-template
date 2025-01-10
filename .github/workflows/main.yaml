@@ -45,7 +45,7 @@ jobs:
     - name: Install dependencies
       run: |
         cd backend
-        poetry install --with test
+        poetry install --no-root --with test
 
     # Run tests with coverage
     - name: Run tests
