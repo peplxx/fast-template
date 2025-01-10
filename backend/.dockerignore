@@ -1,3 +1,7 @@
 # Exclude tests from Docker container
 tests/
 pytest.ini
+Dockerfile
+*.pyc
+*.md
+Makefile
