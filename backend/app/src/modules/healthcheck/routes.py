@@ -2,7 +2,7 @@ from fastapi import APIRouter, Request
 from starlette import status
 from starlette.responses import JSONResponse
 
-from app.config import get_settings
+from app.src.settings import settings
 from .health import database_healthcheck
 from .schemas import PingResponse
 from ...modules.time import TimeModule, str_utcnow
@@ -11,7 +11,6 @@ from ...common.limiter import limiter
 router = APIRouter(
     tags=["Healthcheck"],
 )
-settings = get_settings()
 
 
 @router.get(

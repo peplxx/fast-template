@@ -3,12 +3,11 @@ import os
 import logging
 
 from pydantic import BaseModel
-
-from app.config import get_settings
+from app.src.settings import settings
 
 
 class LoggingSettings(BaseModel):
-    APP_NAME: str = get_settings().APP_NAME
+    APP_NAME: str = settings.APP_NAME
     FILE_NAME: str = f"{APP_NAME}_{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.log"
     LOG_DIR: str = "logs"
     ENABLE_SQLALCHEMY_LOGGING: bool = True

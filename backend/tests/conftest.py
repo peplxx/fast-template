@@ -4,12 +4,11 @@ from logging import getLogger
 import pytest
 from httpx import AsyncClient, Cookies
 from httpx import ASGITransport
-from app.config import get_settings
+from app.src.settings import settings
 from app.src.app import app
 from fixtures import *  # noqa : F403
 
-get_settings().TESTING = True
-settings = get_settings()
+settings.TESTING = True
 
 
 clients_params = {

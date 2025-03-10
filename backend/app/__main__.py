@@ -2,15 +2,13 @@ import os
 import sys
 from pathlib import Path
 import uvicorn
-
-from .config import get_settings
+from app.src.settings import settings
 
 # Change dir to project root (two levels up from this file)
 os.chdir(Path(__file__).parents[2])
 
 # Get arguments from command
 args = sys.argv[1:]
-settings = get_settings()
 
 if __name__ == "__main__":
     uvicorn.run(

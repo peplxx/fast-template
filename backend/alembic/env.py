@@ -6,13 +6,13 @@ from sqlalchemy import engine_from_config, pool
 
 from app.db import DeclarativeBase
 from app.db.models import *  # noqa: F403
-from app.config import get_settings
 from dotenv import load_dotenv
+
+from app.src.settings import settings
 
 env_path = Path(__file__).parents[2] / ".env"
 load_dotenv(dotenv_path=env_path)
 
-settings = get_settings()
 config = context.config
 section = config.config_ini_section
 config.set_section_option(section, "POSTGRES_DB", settings.POSTGRES_DB)

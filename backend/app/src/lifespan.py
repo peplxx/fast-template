@@ -4,9 +4,7 @@ from fastapi import FastAPI
 
 from ..metrics.collectors import collectors
 from prometheus_client import start_http_server
-from app.config import get_settings
-
-settings = get_settings()
+from app.src.settings import settings
 
 
 async def lifespan(app: FastAPI):

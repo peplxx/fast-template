@@ -6,10 +6,7 @@ from typing import Annotated
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, AsyncEngine
 from sqlalchemy.orm import sessionmaker
-
-from app.config import get_settings
-
-settings = get_settings()
+from app.src.settings import settings
 
 
 class SessionManager:
@@ -37,7 +34,7 @@ class SessionManager:
 
     def default_engine(self):
         self.engine = create_async_engine(
-            get_settings().database_uri,
+            settings.database_uri,
             echo=True,
             future=True,
             connect_args=settings.db_context,

@@ -1,7 +1,7 @@
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from app.config import get_settings
+from app.src.settings import settings
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
@@ -20,9 +20,6 @@ async def rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded):
         status_code=429,
         content={"detail": "Rate limit exceeded"},
     )
-
-
-settings = get_settings()
 
 
 class DummyLimiter:

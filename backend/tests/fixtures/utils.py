@@ -6,7 +6,8 @@ from typing import Union
 from alembic.config import Config
 from configargparse import Namespace
 
-from app.config import get_settings
+from app.src.settings import settings
+
 
 __all__ = ["make_alembic_config"]
 
@@ -21,7 +22,7 @@ def make_alembic_config(
     Creates an alembic configuration object based on command line arguments,
     replaces relative paths with absolute ones.
     """
-    database_uri = get_settings().database_uri_sync
+    database_uri = settings.database_uri_sync
 
     path_to_folder = cmd_opts.config
     # Replace alembic.ini file path with absolute path

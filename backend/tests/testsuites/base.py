@@ -1,6 +1,5 @@
 from abc import ABC
-
-from app.config import get_settings
+from app.src.settings import settings
 
 
 class BaseTestSuite(ABC):
@@ -16,4 +15,4 @@ class BaseTestClass(ABC):
     """
 
     def url(self, path: str) -> str:
-        return f"{get_settings().PATH_PREFIX}{path}"
+        return f"{settings.PATH_PREFIX}{path}"

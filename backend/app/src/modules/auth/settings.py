@@ -2,8 +2,7 @@ import secrets
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 from os import environ
-
-from app.config import get_settings
+from app.src.settings import settings
 
 
 class AuthSettings:
@@ -19,7 +18,7 @@ class AuthSettings:
     )
     PWD_CONTEXT: CryptContext = CryptContext(schemes=["bcrypt"], deprecated="auto")
     OAUTH2_SCHEME: OAuth2PasswordBearer = OAuth2PasswordBearer(
-        tokenUrl=get_settings().auth_basic_authentication_url
+        tokenUrl=settings.auth_basic_authentication_url
     )
 
 

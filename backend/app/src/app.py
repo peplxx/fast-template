@@ -11,11 +11,8 @@ from .common.exceptions import error_handlers
 from .docs import project
 from .middlewares import middlewares
 from .routers import routers
-from ..config import get_settings
+from .settings import settings
 from .lifespan import lifespan
-
-settings = get_settings()
-
 
 app = FastAPI(
     **project.specification,

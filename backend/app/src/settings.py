@@ -1,16 +1,18 @@
 import ssl
 from typing import Optional
 
-from dotenv import load_dotenv
+from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 from pathlib import Path
 
-
-env_path = Path(__file__).parents[3] / ".env"
-load_dotenv(dotenv_path=env_path)
+__all__ = ["settings"]
 
 
 class DefaultSettings(BaseSettings):
+    model_config = ConfigDict(
+        env_file=Path(__file__).parent.parent.parent.parent / ".env", extra="ignore"
+    )
+
     ENV: str = "default"
     APP_NAME: str = "fastapi-template"
     PATH_PREFIX: str = "/api/v1"
@@ -39,9 +41,7 @@ class DefaultSettings(BaseSettings):
 
     @property
     def limiter_enabled(self) -> bool:
-        if self.TESTING:
-            return False
-        return True
+        return not self.TESTING
 
     @property
     def current_host_url(self) -> str:
@@ -82,3 +82,6 @@ class DefaultSettings(BaseSettings):
         ssl_context = ssl.create_default_context(cafile=self.DB_SSL_KEY_PATH)
         ssl_context.verify_mode = ssl.CERT_REQUIRED
         return {"ssl": ssl_context}
+
+
+settings = DefaultSettings()

@@ -1,4 +1,4 @@
-from app.config import get_settings
+from app.src.settings import settings
 from uuid import uuid4
 import pytest
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -20,9 +20,8 @@ def postgres():
 
     tmp_name = uuid4().hex
     print(tmp_name)
-    get_settings().POSTGRES_DB = tmp_name
+    settings.POSTGRES_DB = tmp_name
     environ["POSTGRES_DB"] = tmp_name
-    settings = get_settings()
     tmp_url = settings.database_uri_sync
     if not database_exists(tmp_url):
         create_database(tmp_url)
