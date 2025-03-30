@@ -2,7 +2,6 @@ from fastapi import APIRouter, Request
 from starlette import status
 from starlette.responses import JSONResponse
 
-from app.src.settings import settings
 from .health import database_healthcheck
 from .schemas import PingResponse
 from ...modules.time import TimeModule, str_utcnow
@@ -26,7 +25,6 @@ async def ping(request: Request):
         "message": "The server is up!",
         "uptime": TimeModule.UPTIME,
         "client_ip": request.client.host,
-        "environment": settings.ENV,
         "server_time": str_utcnow(),
         "services": {
             "database": "Ok" if await database_healthcheck() else "Down",
