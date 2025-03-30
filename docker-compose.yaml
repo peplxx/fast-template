@@ -1,7 +1,6 @@
 services:
   # Backend Database
   database:
-    container_name: 'postgres'
     image: 'postgres:17.4-alpine'
     restart: always
     networks:
@@ -27,7 +26,6 @@ services:
 
   # Backend service
   backend:
-    container_name: 'backend'
     networks:
       - default
     depends_on:
@@ -46,7 +44,6 @@ services:
   # Reverse Proxing
   # HTTP:
   nginx-http:
-    container_name: 'nginx'
     profiles: [http]
     image: nginx:1.27.4-alpine
     environment:
@@ -61,10 +58,10 @@ services:
   
   # HTTPS:
   nginx-https:
-    container_name: 'nginx'
     profiles: [https]
     image: nginx:1.27.4-alpine
-    env_file: .env
+    environment:
+      - BACKEND_PORT=${APP_PORT}
     ports:
       - "80:80"
       - "443:443"
@@ -76,7 +73,6 @@ services:
 
   # Monitoring (Prometheus + Graphana)
   prometheus:
-    container_name: 'prometheus'
     image: prom/prometheus:v3.2.1
     profiles: [monitoring]
     ports:
@@ -89,7 +85,6 @@ services:
     command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yaml
 
   grafana: # Default login: admin, password: admin
-    container_name: 'grafana'
     image: grafana/grafana:11.6.0
     profiles: [monitoring]
     ports:

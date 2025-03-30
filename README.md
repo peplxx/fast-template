@@ -82,7 +82,7 @@ make <target-config>
 > **Local setup:** starts database, setup poetry and make migrations besides runing app itself.
 
 > **Production:** Also there is script to run prod setup as linux-unit: `/deploy/deploy-service.sh`.
----
+
 #### 3. Avaliability
 Assume, that you run app on localhost:
  - **Backend/Swagger** : `localhost/swagger`
