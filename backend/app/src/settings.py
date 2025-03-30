@@ -13,7 +13,6 @@ class DefaultSettings(BaseSettings):
         env_file=Path(__file__).parent.parent.parent.parent / ".env", extra="ignore"
     )
 
-    ENV: str = "default"
     APP_NAME: str = "fastapi-template"
     PATH_PREFIX: str = "/api/v1"
     APP_HOST: str = "0.0.0.0"
@@ -33,8 +32,8 @@ class DefaultSettings(BaseSettings):
     DB_SSL_KEY_PATH: Optional[str] = None
 
     SWAGGER_PATH: Optional[str] = "/swagger"
-    REDOC_PATH: Optional[str] = None
     SCALAR_PATH: Optional[str] = "/scalar"
+    REDOC_PATH: Optional[str] = None
 
     # Flags
     TESTING: bool = False
