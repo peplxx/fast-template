@@ -1,4 +1,5 @@
 services:
+  # Backend Database
   database:
     container_name: 'postgres'
     image: 'postgres:17.4-alpine'
@@ -24,30 +25,7 @@ services:
       start_period: 5s
       timeout: 2s
 
-  prometheus:
-    container_name: 'prometheus'
-    image: prom/prometheus:v3.2.1
-    ports:
-      - 9090:9090
-    networks:
-      - default
-    volumes:
-      - ./prometheus:/etc/prometheus
-      - prometheus-data:/prometheus
-    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yaml
-
-  grafana: # login: admin, password: admin
-    container_name: 'grafana'
-    image: grafana/grafana:11.6.0
-    networks:
-      - default
-    ports:
-      - 3333:3000
-    volumes:
-      - ./graphana/datasources:/etc/grafana/provisioning/datasources
-      - ./graphana/dashboards:/etc/grafana/provisioning/dashboards
-      - grafana-data:/var/lib/grafana
-
+  # Backend service
   backend:
     container_name: 'backend'
     networks:
@@ -60,26 +38,71 @@ services:
     environment:
       - POSTGRES_HOST=database
     build: ./backend
-    volumes:
-      - ./certs:/etc/ssl
     ports:
       - "${APP_PORT}:${APP_PORT}"
       - "${PROMETHEUS_PORT}:${PROMETHEUS_PORT}"
     command: [ "sh", "-c", "poetry run alembic upgrade head && poetry run python -m app" ]
 
-  nginx:
+  # Reverse Proxing
+  # HTTP:
+  nginx-http:
     container_name: 'nginx'
+    profiles: [http]
     image: nginx:1.27.4-alpine
+    env_file: .env
     ports:
-      - "80:80" # HTTP
+      - "80:80"
     volumes:
-      - ./nginx/nginx-dev.conf:/etc/nginx/nginx.conf # Dev Nginx configuration
-      - ./certs:/etc/ssl # SSL certificates
+      - ./nginx/default-http.conf:/etc/nginx/templates/default.conf.template
+    depends_on:
+      - backend
+  
+  # HTTPS:
+  nginx-https:
+    container_name: 'nginx'
+    profiles: [https]
+    image: nginx:1.27.4-alpine
+    env_file: .env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default-https.conf:/etc/nginx/templates/default.conf.template
+      - ./certs:/etc/ssl
     depends_on:
       - backend
 
+  # Monitoring (Prometheus + Graphana)
+  prometheus:
+    container_name: 'prometheus'
+    image: prom/prometheus:v3.2.1
+    profiles: [monitoring]
+    ports:
+      - 9090:9090
+    networks:
+      - default
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command: --web.enable-lifecycle --config.file=/etc/prometheus/prometheus.yaml
+
+  grafana: # Default login: admin, password: admin
+    container_name: 'grafana'
+    image: grafana/grafana:11.6.0
+    profiles: [monitoring]
+    ports:
+      - 3333:3000
+    networks:
+      - default
+    volumes:
+      - ./graphana/datasources:/etc/grafana/provisioning/datasources
+      - ./graphana/dashboards:/etc/grafana/provisioning/dashboards
+      - grafana-data:/var/lib/grafana
+
+  # Backups
   pgbackups:
     image: prodrigestivill/postgres-backup-local:17-alpine-437f2e9
+    profiles: [backups]
     restart: always
     environment:
       - POSTGRES_HOST=database
@@ -102,6 +125,8 @@ services:
 
 networks:
   default:
+    driver: bridge
+  
 volumes:
   data:
   prometheus-data:
