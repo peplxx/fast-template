@@ -1,0 +1,53 @@
+name: Docker Compose CI
+permissions:
+  contents: read
+  pull-requests: write
+  
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  validate-docker-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Configure .env file
+        run: cp .env.example .env
+      
+      - name: Load environment variables
+        uses: aarcangeli/load-dotenv@v1
+
+      - name: Validate compose.yaml
+        run: docker compose config
+
+      - name: Build Docker images
+        run: docker compose --profile http build --pull
+
+      - name: Start containers
+        run: docker compose --profile http up -d
+      
+      - name: Check Backend Avaliability
+        run: |
+          for i in {1..10}; do
+            if curl -s -o /dev/null -w "%{http_code}" http://localhost/api/v1/ping | grep 200; then
+              echo "Backend is ready!"
+              exit 0
+            fi
+            echo "Waiting for Backend to start... (Attempt $i)"
+            sleep 5
+          done
+          echo "Backend did not start within 50 seconds"
+          exit 1
+
+      - name: Stop containers
+        run: docker compose down -v
+        if: always()
