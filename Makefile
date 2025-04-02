@@ -31,19 +31,19 @@ endif
 
 
 run-local: poetry run-db migrate  ##@Run Run app in local mode (backend(local) + database(docker))                         [docker-compose.yaml]
-	make run-db && make -C backend run-local
+	make -C backend run-local
 
 run-dev1: ##@Run Run app in dev1 mode  (nginx(http) + backend + database)                          [docker-compose.yaml]
-	docker compose up --build database backend nginx
+	docker compose --profile http up  --build
 
 run-dev2: ##@Run Run app in dev2 mode  (nginx(http) + backend + database + graphana + prometheus)  [docker-compose.yaml]
-	docker compose up --build
+	docker compose --profile http --profile monitoring up --build
 
 run-prod: ##@Run Run app in prod mode  (nginx(https) + backend + database + graphana + prometheus) [docker-compose-prod.yaml]
-	docker compose -f docker-compose-prod.yaml up --build
+	docker compose --profile https --profile monitoring --profile backups up --build
 
-down-prod: ##@Down Down production config
-	docker compose -f docker-compose-prod.yaml down
+down: ##@Down Down production config
+	docker compose --profile "*" down
 
 test: ##@Tests Run tests
 	make -C backend test
